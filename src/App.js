@@ -1,29 +1,39 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
-import MyName from './MyName';
-import Counter from './Counter'
+import PhoneForm from './PhoneForm';
+import PhoneInfoList from './PhoneInfoList';
 
 class App extends Component {
+    id = 2
+    state = {
+            information: [
+                          {
+                              id: 0,
+                              name: '박근희',
+                              phone: '010-3231-9699'
+                          },
+                          {
+                              id: 1,
+                              name: '진혜정',
+                              phone: '010-8597-5882'
+                          }
+            ]
+    }
+    
+  handleCreate = (data) => {
+      const { information } = this.state;
+      this.setState({
+          information: information.concat({ id: this.id++, ...data})
+      })
+  }  
+    
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React. wow</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-        <div>
-        	{ /* 주석은 이렇게 작성 */
-        		1 + 1 === 2 ? (<div>맞아요</div>) : (<div>틀려요</div>)
-        	}
-        </div>
-        <MyName name1="박근희" />
-        
-        <Counter />
-      </div>
+      <div>
+          <PhoneForm 
+              onCreate={this.handleCreate}
+          />
+          <PhoneInfoList data={this.state.information} />
+       </div>
     );
   }
 }
